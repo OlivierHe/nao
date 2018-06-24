@@ -1,0 +1,119 @@
+{% extends "::layout.html.twig" %}
+
+{% block stylesheets%}
+    <style>
+        .select2-selection__placeholder{
+            float: left;
+        }
+        .select2-container--default{
+            margin-top: 10px;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    {% for success in app.session.flashBag.get('success') %}
+        <div id="success-for-toast">
+        </div>
+    {% endfor %}
+    <div class="container">
+        <div class="row">
+            <div class="row" >
+                <div  class="col l4 s12" style="margin-top: 15px;">  <h1> Ajouter une observation </h1></div>
+                <div  class="col l8 s12">
+                    <h1> Aperçu sur la carte
+                        <a class="btn btn-floating btn-tiny waves-effect light-blue accent-4 waves-light tooltipped"
+                        data-position="right" data-delay="50" data-tooltip="Utiliser la géolocalisation" id="btn-geo">
+                       <i class="material-icons small  " >my_location</i></a> </h1>
+                </div>
+            </div>
+        <div class="row" style="height: 720px;">
+            <div class="col s12 l4 " style="height: 100%; margin-bottom: 10px; ">
+                <div class="card block-form " style="padding-bottom: 20px; padding-top: 20px;">
+
+                    {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+
+                    <div style="display: flex; flex-direction: column; justify-content: space-around; height: 100%">
+
+                    <div class="form-group" >
+                        <div class="input-field">
+                            <label class="active">Nom de l'espèce*</label>
+                            <select class="js-data-example-ajax text-flow " style="width: 100%;" data-path="{{ path('taxref_query') }}" ></select>
+                        </div>
+                        {{ form_widget(form.taxref) }}
+                        {{ form_errors(form) }}
+                    </div>
+
+                    <div class="form-group " >
+                        <div class="input-field">
+                            {{ form_widget(form.observationDate, {'attr': {'class': 'form-control datepicker',"placeholder" : "Date de l'observation ", "type" : "date"}}) }}
+                            {{ form_label(form.observationDate, "Date de l'observation*") }}
+                        </div>
+                        {{ form_errors(form.observationDate) }}
+                    </div>
+
+                    <div class="form-group ">
+                        <div class=" input-field">
+                            {{ form_widget(form.latitude, {'attr': {'class': 'form-control   ', "type" : "text", "placeholder" : "Latitude" , "readonly" : ""}} ) }}
+                            {{ form_label(form.latitude, "Latitude*") }}
+                        </div>
+                        {{ form_errors(form.latitude) }}
+                    </div>
+
+                    <div class="form-group " >
+                        <div class=" input-field">
+                            {{ form_widget(form.longitude, {'attr': {'class': 'form-control ', "type" : "text", "placeholder" : "Longitude" , "readonly" :" ", "validate" : " "  }}) }}
+                            {{ form_label(form.longitude, "Longitude*") }}
+                        </div>
+                        {{ form_errors(form.longitude) }}
+                    </div>
+
+                    <div class="form-group">
+                        <div class="file-field input-field">
+                            <div class="btn light-blue accent-4 waves-effect waves-light">
+                                <span>Photo</span>
+                                {{ form_widget(form.photo, {'attr': {'class': 'form-control validate', "type" : "file" }}) }}
+                            </div>
+                            <div class="file-path-wrapper">
+                                <input class="file-path " type="text" disabled>
+                            </div>
+                        </div>
+                        {{ form_errors(form.photo) }}
+                    </div>
+
+
+                    <button class="waves-effect waves-light  light-blue accent-4  btn " role="button"  type="submit" style="margin-top: 5px" id="valid-btn"> Valider </button>
+                    </div>
+                    {{ form_end(form) }}
+                    </div>
+            </div>
+
+            <div class="col s12 l8 " style="height: 720px">
+                <div class="card block-map" style="height: 100%; padding: 0">
+                    <div id="map"></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="modal-gps" class="modal">
+            <div class="modal-content">
+                <p style="font-weight: 500">Voulez vous utiliser votre position actuelle pour les coordonnées gps de l’observation ?</p>
+                <p >Vous pouvez placer manuellement la position de l'observation quelque soit votre choix.</p>
+
+            </div>
+            <div class="modal-footer">
+                <a href="#!" id="accept-gps" class="modal-action modal-close waves-effect green waves-light btn-flat" style="text-decoration: none">Oui </a>
+                <a href="#!" id="refuse-gps" class="modal-action modal-close waves-effect red waves-light btn-flat" style="text-decoration: none">Non</a>
+            </div>
+        </div>
+
+        </div>
+    </div>
+{% endblock %}
+
+{% block scriptfoot %}
+    <script type="text/javascript" src="{{ asset("js/add_observation.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("js/datepicker.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("js/autocomplete_add_obs.js") }}"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDb1GhcsfH1zfsowDSMxr8IWefQ0YnnQPI&callback=initMap"></script>
+{% endblock %}

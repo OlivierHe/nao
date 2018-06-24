@@ -1,0 +1,18 @@
+{% extends "layout.html.twig" %}
+
+{% block title %} Erreur générique! {% endblock %}
+{% block content %}
+    <div class="container box-error">
+        <div class="row">
+            <div class="col s12 offset-m4 m4" style="text-align: center">
+                <h1>Whoops erreur</h1>
+                <p> Merci de contacter l'administrateur du site : olivier.herzog@gmail.com
+                    et de l'informer de l'erreur rencontrée</p>
+                <br><br>
+                <a href="{{ path('accueil') }}">
+                    <button class="waves-effect waves-light light-blue accent-4 btn col s12 col m12 col l6 offset-l3"> ACCUEIL</button>
+                </a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

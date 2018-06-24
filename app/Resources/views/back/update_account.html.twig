@@ -1,0 +1,118 @@
+{% extends "::layout.html.twig" %}
+
+{% block content %}
+
+    {% for message in app.session.flashBag.get('info') %}
+        <div class="card-panel teal green accent-2 testflash" style="text-align: center">
+            {{ message }}
+        </div>
+    {% endfor %}
+
+    {% if is_granted('ROLE_PARTICULIER') and app.user.justificatif and app.user.account == 'Particulier' %}
+        <div class="card-panel light-blue accent-4 lighten-1" style="text-align: center; color: white">
+            Votre justificatif est en cours de traitement par l'administration.
+        </div>
+    {% endif %}
+
+    <div  class="container box-master">
+    {{ form_start(form, {'attr':{'id': 'user_form'}} ) }}
+        <div class="row">
+        <div class="row" style="height:600px;">
+            <h1>Modifier vos informations</h1>
+            <div class="col l6 s12" style="padding: 5px ; height: 100%; ">
+                <div class=" card" style="padding: 30px; height: 100%; ">
+
+                    <div style="display: flex; flex-direction: column; justify-content: space-between; height: 100%">
+                        <div class="form-group " style="margin-top: 20px">
+                            <div>
+                                {{ form_row(form.gender) }}
+                            </div>
+                            {{ form_errors(form.gender) }}
+                        </div>
+                        <div class="form-group" style="margin-top: 20px">
+                            <div class=" input-field">
+                                {{ form_widget(form.name) }}
+                                {{ form_label(form.name) }}
+                            </div>
+                            {{ form_errors(form.name) }}
+                        </div>
+                        <div class="form-group" style="margin-top: 20px">
+                            <div class=" input-field">
+                                {{ form_widget(form.firstName) }}
+                                {{ form_label(form.firstName) }}
+                            </div>
+                            {{ form_errors(form.firstName) }}
+                        </div>
+                        <div class="form-group " style="margin-top: 20px">
+                            <div class=" input-field">
+                                {{ form_widget(form.username) }}
+                                {{ form_label(form.username) }}
+                            </div>
+                            {{ form_errors(form.username) }}
+                        </div>
+                        <div class="form-group " style="margin-top: 20px">
+                            <div class="input-field">
+                                {{ form_widget(form.birthDate, {'attr': {'placeholder': "JJ/MM/AAAA"}} ) }}
+                                {{ form_label(form.birthDate) }}
+                            </div>
+                            {{ form_errors(form.birthDate) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col l6 s12" style="padding: 5px; height: 100%;">
+                <div class=" card" style="padding: 30px; height: 100%;">
+                    <div style="display: flex; flex-direction: column; justify-content: space-around; height: 100%">
+                        <div class="form-group col s12" style="margin-top: 20px">
+                            <div class=" input-field">
+                                {{ form_widget(form.pseudo) }}
+                                {{ form_label(form.pseudo) }}
+                            </div>
+                            {{ form_errors(form.pseudo) }}
+                        </div>
+                        <div class="form-group col s12" style="margin-top: 20px">
+                            <div class="input-field">
+                                {{ form_widget(form.password.first, {'attr' : { 'required': 'false'}}  ) }}
+                                {{ form_label(form.password.first) }}
+                            </div>
+                            {{ form_errors(form.password.first) }}
+                        </div>
+
+                        <div class="form-group col s12" style="margin-top: 20px">
+                            <div class="input-field">
+                                {{ form_widget(form.password.second) }}
+                                {{ form_label(form.password.second) }}
+                            </div>
+                            {{ form_errors(form.password.second) }}
+                        </div>
+
+                        <div class="form-group col m12">
+                            <p style="font-size: 11px; font-weight: 300">Par défaut vous disposez
+                                d'un compte Particulier. Pour posséder un compte Naturaliste, vous devez fournir un justificatif</p>
+                            <div class="file-field input-field">
+                                <div class="btn light-blue accent-4 waves-effect waves-light">
+                                    <span>Justificatif</span>
+                                    {{ form_widget(form.justificatif, {'attr': {'class': 'form-control validate', "type" : "file" }}) }}
+                                    {{ form_errors(form.justificatif) }}
+                                </div>
+                                <div class="file-path-wrapper">
+                                    <input class="file-path " type="text" disabled>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="display: none;">
+                            {{ form_row(form.mentionsLegales) }}
+                        </div>
+                        {{ form_rest(form) }}
+
+                        <button class="waves-effect waves-light  light-blue accent-4  btn col s6 offset-s3  " role="button" type="submit" form="user_form" id="update"  > Valider </button>
+                        {{ form_end(form) }}
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

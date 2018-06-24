@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
+
+    <link href="{{ asset('css/landingPage.css') }}" rel="stylesheet">
+</head>
+<body>
+<div class="row">
+    <div class="col s12 m12" style="background-color: #7e9cff">
+        <div class="col s1 m1">
+            <img alt="NOA" title="noa" class="noa-logo responsive-img" src="{{ asset("images/nao_logo.svg") }}">
+        </div>
+        <div class="col s9 m6">
+            <h1>Nos Amis Les Oiseaux</h1>
+            <h2> Un moyen simple de contribuer à votre environnement tout en vivant votre passion ! </h2>
+        </div>
+    </div>
+</div>
+<div class="row" style="margin: 0 30px">
+
+   <div class="col s12 l7">
+       <div class="card" style="height: 100%">
+           <div class="card-image">
+               <img src="{{ asset("images/imageLanding2.jpg") }}">
+               <div class="card-title" style="text-align: center">
+                   Grâce à notre carte interactive, géolocalisez les espèces que vous avez rencontré et partagez vos découvertes avec la communauté
+               </div>
+           </div>
+           <div class="card-content" style="display: flex; justify-content: space-around; flex-direction: column; letter-spacing: 1px "   >
+
+               <p><i class="fa fa-globe fa-lg" aria-hidden="true"></i>  Contribuez à la protection de votre environnement</p>
+               <p><i class="fa fa-share-alt" aria-hidden="true"></i>  Partagez avec d’autres passionnés</p>
+               <p><i class="fa fa-graduation-cap" aria-hidden="true"></i>Apprenez en plus tout en vivant votre passion</p>
+               <p><i class="fa  fa-comments-o" aria-hidden="true"></i>  Échangez entre particuliers et professionnels</p>
+               <p><i class="fa fa-search" aria-hidden="true"></i>  Découvrez les nouvelles espèces qui peuplent vos régions</p>
+
+           </div>
+       </div>
+   </div>
+
+    <div class="col s12 l4 offset-l1">
+        <div class="card" style="height: 100%">
+            <div class="card-content" style="background-color: #7e9cff">
+                <div class="card-title" style="text-align: center; margin: 0 !important; color: #ffffff">Rejoignez-nous ! </div>
+            </div>
+            {{ form_start(form) }}
+            <div class="card-content">
+                <div class="form-group " style="margin-top: 20px">
+                    <div class="div-radio" >
+                        {{ form_row(form.gender) }}
+                    </div>
+                    {{ form_errors(form.gender) }}
+                </div>
+
+
+                <div style="display:flex; justify-content: space-around">
+
+                    <div class="form-group " style="margin-top: 20px">
+                        <div class=" input-field" >
+                            {{ form_widget(form.name) }}
+                            {{ form_label(form.name) }}
+                        </div>
+                        {{ form_errors(form.name) }}
+                    </div>
+
+
+                    <div class="form-group " style="margin-top: 20px">
+                        <div class=" input-field">
+                            {{ form_widget(form.firstName) }}
+                            {{ form_label(form.firstName) }}
+                        </div>
+                        {{ form_errors(form.firstName) }}
+                    </div>
+
+
+                </div>
+
+                <div class="form-group " style="margin-top: 20px">
+                    <div class=" input-field">
+                        {{ form_widget(form.username) }}
+                        {{ form_label(form.username) }}
+                    </div>
+                    {{ form_errors(form.username) }}
+                </div>
+                <div class="form-group " style="margin-top: 20px">
+                    <div class="input-field">
+                        {{ form_widget(form.birthDate, {"attr": {"class": "datepicker", "type" : "date"}}) }}
+                        {{ form_label(form.birthDate) }}
+                    </div>
+                    {{ form_errors(form.birthDate) }}
+                </div>
+
+                <div class="form-group " style="margin-top: 20px">
+                    <div class=" input-field">
+                        {{ form_widget(form.pseudo) }}
+                        {{ form_label(form.pseudo) }}
+                    </div>
+                    {{ form_errors(form.pseudo) }}
+                </div>
+                <div class="form-group " style="margin-top: 20px">
+                    <div class="input-field">
+                        {{ form_widget(form.password.first) }}
+                        {{ form_label(form.password.first) }}
+                    </div>
+                    {{ form_errors(form.password.first) }}
+                </div>
+
+                <div class="form-group " style="margin-top: 20px">
+                    <div class="input-field">
+                        {{ form_widget(form.password.second) }}
+                        {{ form_label(form.password.second) }}
+                    </div>
+                    {{ form_errors(form.password.second) }}
+                </div>
+
+
+                <div class="form-group">
+                    <p style="font-size: 11px; font-weight: 300">Par défaut vous disposerez
+                        d'un compte Particulier. Pour posséder un compte Naturaliste, vous devez fournir un justificatif</p>
+                    <div class="file-field input-field">
+                        <div class="btn white btn-small waves-effect waves-light">
+                            <span>Justificatif</span>
+                            {{ form_widget(form.justificatif, {'attr': {'class': 'form-control validate', "type" : "file" }}) }}
+                            {{ form_errors(form.justificatif) }}
+                        </div>
+                        <div class="file-path-wrapper">
+                            <input class="file-path " type="text" disabled>
+                        </div>
+                    </div>
+                </div>
+                <div style="display:flex; margin-top: 20px; justify-content: space-around" id="cg">
+                    <div>
+                        {{ form_widget(form.mentionsLegales) }}
+                        {{ form_label(form.mentionsLegales, " J'accepte les CGU") }}
+                        {{ form_errors(form.mentionsLegales) }}
+                    </div>
+                    <button class="waves-effect waves-light btn-large btn-valid  btn " role="button"  type="submit" > Valider </button>
+                </div>
+
+                {{ form_rest(form) }}
+                {{ form_end(form) }}
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<footer>
+    <div class="row" style="margin-bottom: 0">
+        <div class="col m7 s12" id="btn-footer">
+            <a class="waves-effect waves-light btn  white" href="{{ path('contact') }}" >Nous contacter</a>
+           <a class="waves-effect waves-light btn  white" href="{{ path('mentions_legales') }}" >
+                Mentions légales</a>
+        </div>
+
+        <div class="col m4 offset-m1 s12 sociaux">
+            <a href="http://www.facebook.com" target="_blank"><img
+                        src="{{ asset("images/facebook-white.svg") }}"></a>
+            <a href="https://plus.google.com/?hl=fr" target="_blank"><img
+                        src="{{ asset("images/google-white.svg") }}"></a>
+            <a href="https://www.instagram.com/?hl=fr" target="_blank"><img
+                        src="{{ asset("images/instagram-white.svg") }}"></a>
+            <a href="https://twitter.com" target="_blank"><img
+                        src="{{ asset("images/twitter-white.svg") }}"></a>
+        </div>
+    </div>
+</footer>
+
+
+<script>
+    $(document).ready(function() {
+        $('select').material_select();
+
+        $('#inscription_gender_0').attr( 'checked', 'checked' );
+        $('#inscription_account_0').attr('checked', 'checked');
+    })
+</script>
+<script type="text/javascript" src="{{ asset("js/datepicker.js") }}"></script>
+</body>
+</html>

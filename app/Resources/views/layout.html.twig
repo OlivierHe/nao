@@ -1,0 +1,119 @@
+{# app/Resources/views/layout.html.twig #}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+ 
+    <title>Nos Amis les Oiseaux</title>
+
+    {% block scripthead %}
+
+        <!--Import jQuery before materialize.js-->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/i18n/fr.js"></script>
+        <!-- icons -->
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+        <!-- Compiled and minified CSS -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
+        <!-- Compiled and minified JavaScript -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
+
+    {% endblock %}
+
+    <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+    {% block stylesheets %}
+
+    {% endblock %}
+
+    </head>
+    <body>
+        <div>
+            <header>
+                <nav class="blue-grey darken-4">
+                    <div class="nav-wrapper blue-grey darken-4">
+                        <a class="brand-logo btn btn-floating blue-grey darken-4" href="{{ path('accueil') }}"><img alt="NOA" src="{{ asset("images/nao_logo.svg") }}"></a>
+                        <a href="#" data-activates="mobile-demo" class="button-collapse button-side"><i class="material-icons medium">menu</i></a>
+                        {% include 'navbar.html.twig' %}
+                    </div>
+                </nav>
+            </header>
+
+            <main>
+                {% if is_granted('ROLE_EN_ATTENTE_DE_VALIDATION') %}
+                    <div class="card-panel light-blue accent-4 lighten-1" style="text-align: center; color:white">
+                        Veuillez confirmer votre compte grâce au mail de validation qui vous a été envoyé</div>
+                {% endif %}
+
+                {% block content %}
+                {% endblock %}
+            </main>
+
+       
+            {% include 'sidenav.html.twig' %}
+    
+
+            <footer class="page-footer blue-grey darken-3">
+                <div class="container">
+                    <div class="row">
+                        <div class="col l5 s12">
+                            <h5 class="white-text flow-text">Suivez nous sur les réseaux sociaux</h5>
+                            <div class="row sociaux">
+                                <a class="col m2  " href="http://www.facebook.com" target="_blank"><img src="{{ asset("images/facebook.svg") }}"></a>
+                                <a class="col m2  offset-m1" href="https://plus.google.com/?hl=fr" target="_blank"><img src="{{ asset("images/google_plus.svg") }}"></a>
+                                <a class="col m2 offset-m1" href="https://www.instagram.com/?hl=fr" target="_blank"><img src="{{ asset("images/instagram.svg") }}"></a>
+                                <a class="col m2  offset-m1" href="https://twitter.com" target="_blank"><img src="{{ asset("images/twitter.svg") }}"></a>
+                            </div>
+                        </div>
+                        <div class="col l4 offset-l3 s12">
+                            <h5 class="white-text">Liens utiles</h5>
+                            <ul>
+                                <li><a class="grey-text text-lighten-3" href="{{ path('contact') }}">Nous contacter</a></li>
+                                <li><a class="grey-text text-lighten-3" href="{{ path('mentions_legales') }}">Mentions légales</a></li>
+                                <li><a class="grey-text text-lighten-3" href="{{ path('notre_association') }}">Adhérer à l'association</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer-copyright blue-grey darken-4">
+                    <div class="container">
+                        © 2017 Copyright Nos Amis Les Oiseaux
+                    </div>
+                </div>
+            </footer>
+        </div>
+
+<script type="text/javascript">
+    $(".button-collapse").sideNav({
+       edge: 'right',
+       closeOnClick: true
+       });
+    $(".menu_perso").sideNav({
+        edge: 'left',
+        closeOnClick: true
+        });
+    
+    $(function() {  
+        // permet de souligner le lien de la page actuelle , a:visited ne marche pas sous symfo 1 en dev 5 en prod a cause du sous domain nao/
+        var classPath = ($(location).attr('pathname')).substring(5);
+        if (classPath !== '') {
+            $('.'+classPath).addClass("current-page");
+        }
+
+        $(".menu_perso").on("click", function (){
+            // debug pour la sidebar hahahahahahah
+            $(".drag-target").attr("style","touch-action: pan-y; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); right: 0px;");
+        });
+ 
+    });
+
+</script>
+{% block scriptfoot %}
+
+    {% endblock %}
+    </body>
+</html>

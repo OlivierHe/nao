@@ -1,0 +1,12 @@
+<p> Bonjour, </p>
+
+<p> Votre compte a bien été créer. Veuillez confirmer votre inscription en cliquant sur le lien ci-dessous </p>
+
+<p> Rappel de l'adresse email :</p>
+
+<p> ------------------------------------------- </p>
+<p> User : {{ username }}</p>
+
+<a href="{{ url('valid_mail', { 'id' : id, 'code_validation' : code_validation} ) }}">Valider votre compte</a>
+
+

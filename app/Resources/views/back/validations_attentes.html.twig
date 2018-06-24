@@ -1,0 +1,197 @@
+{% extends "::layout.html.twig" %}
+
+{% block scripthead %}
+	{{ parent() }}
+	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.15/datatables.min.css"/>
+	<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.15/datatables.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.1.1/css/responsive.dataTables.min.css"/>
+	<script type="text/javascript" src="https://cdn.datatables.net/responsive/2.1.1/js/dataTables.responsive.min.js"></script>
+{% endblock %}
+
+{% block content %}
+	<div class="container box-master" style="margin-bottom: 200px">
+		<h1> Observations en attente de validations </h1>
+
+		<table cellpadding="0" cellspacing="0" border="0" class="display table-datas" id="obs" width="100%">
+			<thead>
+			<tr>
+				<th data-priority="1">Date</th>
+				<th>Id Species</th>
+				<th>Espèce</th>
+				<th>Localisation</th>
+				<th data-priority="3">Photo</th>
+				<th data-priority="2">Actions</th>
+			</tr>
+			</thead>
+			<tbody>
+			</tbody>
+		</table>
+		<br>
+		<div class="row" style="margin-top: 70px">
+			<div class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Cliquer sur la ligne à modifier et ensuite le bouton modifier">
+				<div class="col s12 m10">
+					<select class="js-data-example-ajax text-flow" style="width: 100%">
+					</select>
+				</div>
+				<div class="col s12 m2" style="margin-top: 10px">
+					<button class="waves-effect waves-light  light-blue accent-4  btn btn-modifier"><i class="material-icons left">loop</i>Modifier</button>
+				</div>
+			</div>
+		</div>
+
+		<div id="modal1" class="modal photo-preview">
+			<img id="photo-preview" class="responsive-img" src="">
+		</div>
+
+		<div id="modal2" class="modal gmap">
+			<div class="modal-content" style="width: 100%; height: 100%">
+				<div id="map" ></div>
+			</div>
+		</div>
+	</div>
+
+
+{% endblock %}
+
+{% block scriptfoot %}
+ <script src="{{ asset('js/validations_attentes.js') }}"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+       
+	    var table = $('#obs').DataTable( {
+            "language": {
+                "loadingRecords": '<div class="progress  light-blue accent-4" id="loader"> <div class="indeterminate  light-blue lighten-4"></div> </div>',
+                "lengthMenu": "Nombre de résultats par page _MENU_ ",
+                "zeroRecords": "Aucun résultat",
+                "info": "Page _PAGE_ sur _PAGES_",
+                "paginate": {
+                    "previous": "Précedent",
+                    "next": "Suivant"
+                }
+            },
+	        "ajax": "{{ path('observation_attente_query') }}",
+	            "columns": [
+			        { "data": "date.date",
+			          "render": function (data) {
+			          	var dateConvert = new Date(data).toLocaleDateString();
+			          	return dateConvert;
+			          }
+			        },
+			        { "data": "idespece",
+			          "visible": false,
+                      "searchable": false
+			        },
+			        { "data": "especes"},
+			        { "data": "latlong",
+		         	  "render":  function ( data) {
+                             		return '<a class="map_link" data-target="modal2" href="#" data-latlong="'
+                                     + data 
+                                     +'">Carte</a>';
+                                    }
+		            },
+			        { "data": "photo", 
+					  "render":  function ( data) {
+					  	 			if (!!data) {
+										return '<button class="waves-effect waves-light light-blue accent-4 ' +
+												'btn-large btn-photo" data-target="modal1" data-photo="'
+												+ data
+												+'"><i class="fa fa-camera" aria-hidden="true"></i></button>';
+									} else {
+										return 'Pas de photo';
+									}
+					  }
+				    },
+			        {"data": "idobs",
+		         	 "render":  function ( data) { 
+	                             return '<a class="btn-floating btn-small waves-effect waves-light green btn-action" href="#" data-idobs="'
+	                                     + data 
+	                                     +'" data-state="1"><i class="fa fa-check" aria-hidden="true"></i></a>' 
+	                                     +' <a class="btn-floating btn-small waves-effect waves-light red btn-action" href="#" data-idobs="'
+	                                     + data 
+	                                     +'" data-state="2"><i class="fa fa-minus" aria-hidden="true"></i></a>';
+			                    }
+			        }
+			    ],
+				"searching" : false,
+				"info" : false,
+				"ordering" : false,
+                responsive:true,
+                "lengthMenu": [[5, 10, 20], [5, 10, 20]]
+	    } );
+
+        $('#obs tbody').on( 'click', '.btn-action', function () {
+           var idObs = $(this).data("idobs");
+           var state = $(this).data("state");
+           var data = table.row( $(this).parents('tr') ).data();  // permet de recup toutes les donnees de la ligne objet
+           $.ajax({
+			  url: "{{ path('observation_update_state_query') }}",
+			  data: { idobs: idObs, idespece: data.idespece, state: state } // data.especes
+				}).done(function() { // reload ajax en cas de succès
+					 Materialize.toast('Action effectuée', 4000, 'toast-success');
+					 table.ajax.reload();
+			});
+        } );
+ 
+    $('#obs tbody').on( 'click', 'tr', function () {  // selection - deselec des lignes du tableau
+        if ( $(this).hasClass('selected') ) {
+            $(this).removeClass('selected');
+        }
+        else {
+            table.$('tr.selected').removeClass('selected');
+            $(this).addClass('selected');
+        }
+	} );
+ 
+    $('.btn-modifier').click( function () { 	// modification du nom de l'espèce
+    	 if (table.rows( '.selected' ).any()) {
+    	 	   var select2Obj = $(".js-data-example-ajax").select2('data');
+               if (select2Obj.length) {
+               	  var data = table.row('.selected').data();
+        		  table.cell(table.row('.selected'),2).data(select2Obj[0].nomRef).draw();
+        		  table.cell(table.row('.selected'),1).data(select2Obj[0].id).draw();
+               } else {
+               	 Materialize.toast('Vous devez faire un choix dans modifier l\'espèce', 4000);
+               }    
+    	 } else {
+    	 	Materialize.toast('Vous devez selectionner la ligne à modifier', 4000);
+    	 }
+    } );
+
+    });
+
+	$(".js-data-example-ajax").select2({ 
+	  ajax: {
+	    url: "{{ path('taxref_query') }}",
+	    dataType: 'json',
+	    delay: 600,
+	    data: function (params) {
+	      return {
+	        q: params.term, // search term
+	        page: 8
+	      };
+	    },
+	    processResults: function (data, params) {
+	      params.page = params.page || 1;
+	      search = params.term;
+	      return {
+	        results: data,  
+	        pagination: {
+	          more: (8 * 1) < data.total_count
+	        }
+	      };
+	    },
+	    cache: true
+	  },
+	  escapeMarkup: function (markup) { return markup; }, 
+	  minimumInputLength: 1,
+	  templateResult: formatRepo, 
+	  templateSelection: formatRepoSelection, 
+	  placeholder: "test",
+	  allowClear: true,
+	  language: "fr"
+	});  
+</script>
+<script async defer
+src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDNpD95psKwrKpe9cs8f39Ax_43ZWWYjsU&callback=initMap">
+</script>
+{% endblock %}

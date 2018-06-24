@@ -1,0 +1,163 @@
+{% extends "::layout.html.twig" %}
+
+{% block scripthead %}
+	{{ parent() }}
+	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.15/datatables.min.css"/>
+	<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.15/datatables.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.1.1/css/responsive.dataTables.min.css"/>
+	<script type="text/javascript" src="https://cdn.datatables.net/responsive/2.1.1/js/dataTables.responsive.min.js"></script>
+{% endblock %}
+
+
+{% block content %}
+	<div class="container box-master" style="margin-bottom: 200px">
+		<h1> Mes observations </h1>
+
+		<div class="right-align">
+			<a class="waves-effect waves-light  light-blue accent-4  btn " href="{{ path('ajouter_observation') }}"
+			   style="color: white">
+				<i class="material-icons left">
+					note_add</i>Ajouter une observation</a>
+		</div>
+		<table cellpadding="0" cellspacing="0" border="0" class="display  table-datas" id="obs" width="100%" style="margin-bottom: 20px">
+			<thead>
+			<tr>
+				<th data-priority="1">Date</th>
+				<th>Espèce</th>
+				<th data-priority="3">Localisation</th>
+				<th>Statut</th>
+				<th data-priority="2">Photo</th>
+			</tr>
+			</thead>
+			<tbody>
+			</tbody>
+		</table>
+
+		<div id="modal1" class="modal photo-preview">
+			<img id="photo-preview" class="responsive-img" src="">
+		</div>
+
+		<div id="modal2" class="modal gmap">
+			<div class="modal-content" style="width: 100%; height: 100%">
+				<div id="map" ></div>
+			</div>
+		</div>
+	</div>
+
+
+{% endblock %}
+
+{% block scriptfoot %}
+<script type="text/javascript">
+
+     function initMap(latLong)
+	{
+		if (typeof latLong !== 'undefined') {
+			var lat = parseFloat(latLong[0]);
+			var long = parseFloat(latLong[1]);
+		    var myLatLng = new google.maps.LatLng(lat,long);
+		    
+		    var map = new google.maps.Map(document.getElementById("map"),
+		    {
+		        center: myLatLng,
+		        zoom: 15
+		    });
+
+		    var marker = new google.maps.Marker(
+		    {
+		        position: myLatLng,
+		        map: map,
+	            animation: google.maps.Animation.DROP
+		    });
+            
+
+		}
+	}
+
+
+	$(document).ready(function() {
+
+	     $('#obs').DataTable( {
+			 "language": {
+				 "loadingRecords": '<div class="progress  light-blue accent-4" id="loader"> <div class="indeterminate  light-blue lighten-4"></div> </div>',
+				 "lengthMenu": "Nombre de résultats par page _MENU_ ",
+				 "zeroRecords": "Aucun résultat",
+				 "info": "Page _PAGE_ sur _PAGES_",
+				 "paginate": {
+					 "previous": "Précedent",
+					 "next": "Suivant"
+				 }
+			 },
+	        "ajax": "{{ path('observation_status_query') }}",
+	            "columns": [
+			        { "data": "date.date",
+			          "render": function (data) {
+			          	var dateConvert = new Date(data).toLocaleDateString();
+			          	return dateConvert;
+			          }
+			        },
+			        { "data": "especes" },
+			        { "data": "latlong",
+		         	  "render":  function ( data) {
+                             		return '<a class="map_link" data-target="modal2" href="#" data-latlong="'
+                                     + data 
+                                     +'">Carte</a>';
+                        }
+                    },
+                    {"data": "status" },
+			        { "data": "photo", 
+					  "render":  function ( data) {
+					  	 			if (!!data) {
+										return '<button class="waves-effect waves-light light-blue accent-4 ' +
+												'btn-large btn-photo" data-target="modal1" data-photo="'
+												+ data
+												+'"><i class="fa fa-camera" aria-hidden="true"></i></button>';
+									} else {
+										return 'Pas de photo';
+									}
+						 }
+				    }
+			    ],
+			 "searching" : false,
+			 "info" : false,
+			 "ordering" : false,
+			 responsive:true,
+			 "lengthMenu": [[5, 10, 20], [5, 10, 20]]
+
+
+	    });
+
+
+
+
+
+        // ouvre un modale photo quand button photo clické
+      $('#obs tbody').on( 'click', '.btn-photo', function () {
+      	   var photo = $(this).data("photo");
+  	       $('#photo-preview').attr("src", "photos/" + photo);
+           $('#modal1').modal();
+        } );
+
+         // ouvre une modale google map quand lien carte cliqué
+        $('#obs tbody').on( 'click', '.map_link', function () {
+      	   var latLong = $(this).data("latlong");
+      	   var result = latLong.split(",");
+  	       //initMap(result);
+           $('#modal2').modal({
+           		ready: function() { 
+   			 	    initMap(result);
+           			google.maps.event.trigger(map, "resize");
+			    }
+           });   
+        } );
+
+    
+
+	} );
+
+
+</script>
+<script async defer
+src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDNpD95psKwrKpe9cs8f39Ax_43ZWWYjsU&callback=initMap">
+</script>
+{% endblock %}

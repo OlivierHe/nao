@@ -1,0 +1,67 @@
+{% extends "::layout.html.twig" %}
+
+ {% block stylesheets %}
+ <style>
+
+ </style>
+ {% endblock %}
+
+{% block content %}
+		<div class="container">
+			<div class="row box-master">
+				<div class="col m7 s12 card"style="padding: 20px">
+
+						<img class="materialboxed responsive-img" src="{{ asset('images/association_meeting.jpg') }}" height="200px" alt="photo association" title="photo association" style="margin-bottom: 40px">
+
+
+						<p><b>Nos Amis les Oiseaux (NAO)</b> est une association fondée par Michel Dujardin regroupant les  français passionnés de l’ornithologie.
+							Créée en 1998, elle compte aujourd’hui près de 2 000 membres présents sur 83 départements. </p>
+						<p>Créée au départ pour échanger et partager sur l’ornithologie, Nos Amis les Oiseaux veut aujourd’hui sensibiliser et participer à la protection des oiseaux présents en sur le sol français par le biais d’une application participative unique en son genre.</p>
+
+
+						<p>Cette application permet aux professionnels comme aux passionnés de géolocaliser les espèces rencontrées dans la nature, de les identifier et de partager ces découvertes avec la communauté.</p>
+						<br>
+						<p>L’association espère que cette initiative permettra de protéger et de préserver les espèces d’oiseaux qui peuplent nos villes et nos campagnes. Elle permet aussi de lutter contre le braconnage et la destruction des habitats et sites clés. Elle contribue également à une meilleure connaissance des oiseaux et de leurs habitats.</p>
+						<p>Présents partout, les oiseaux sont de précieux indicateurs de l'état de la biodiversité, des véritables baromètres des changements environnementaux mais aussi la grande passion des adhérents de l’association. C’est pourquoi cette initiative était très importante aux yeux de Michel Dujardin, fondateur de l’association.</p>
+						<blockquote>
+							Si vous souhaitez rejoindre l’association, un PDF modifiable si dessous est disponible.<br>
+							Il vous suffit de renseigner les informations demandées dans le document et de l’envoyer à l’adresse suivante :
+							<ul>
+								<li>ASSOCIATION NAO (Nos Amis les Oiseaux)</li>
+								<li>2 rue du Pivert</li>
+								<li>94880 Noiseau</li>
+							</ul>
+							<b><a href="{{ asset ('adhesion/adhesion_nao.pdf') }}" target="_blank">PDF d'inscription à l'association</a></b>
+						</blockquote>
+
+
+				</div>
+
+
+				<div class="col m3 s12 offset-m1 row ">
+					<figure class=" col s12 " style="padding: 0; background-color: transparent;">
+						<img class="materialboxed responsive-img card " src="{{ asset('images/rouge_gorge.jpg') }}" height="300px" alt="rouge gorge" title="rouge gorge">
+						<figcaption> Rouge gorge</figcaption>
+					</figure>
+
+					<figure class="col s12 " style="padding: 0; background-color: transparent;">
+						<img class="materialboxed responsive-img card" src="{{ asset('images/pie_bavarde.jpg') }}" height="300px" alt="pie bavarde" title="pie bavarde">
+						<figcaption> Pie bavarde</figcaption>
+					</figure>
+
+					<figure class="col s12 " style="padding: 0; background-color: transparent;">
+						<img class="materialboxed responsive-img card" src="{{ asset('images/martin_pecheur.jpg') }}" height="300px" alt="martin pecheur" title="martin pecheur">
+						<figcaption> Martin Pêcheur</figcaption>
+					</figure>
+
+					<figure class="col s12 " style="padding: 0; background-color: transparent;">
+						<img class="materialboxed responsive-img card" src="{{ asset('images/colibri.jpg') }}" height="300px" alt="colibri" title="colibri">
+						<figcaption> Colibri</figcaption>
+					</figure>
+
+				</div>
+			</div>
+		</div>
+
+
+{% endblock %}

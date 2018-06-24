@@ -1,0 +1,162 @@
+body {
+    background-color: white;
+}
+
+
+
+.sociaux > a > img{
+    height: 30px;
+}
+.card-title{
+    top: 10px;
+}
+
+.div-radio div{
+    display: flex;
+}
+
+.div-radio label{
+    margin-right: 15px;
+    font-size: 1rem;
+}
+
+.btn{
+    color: #7e9cff ;
+}
+
+.noa-logo{
+    margin-top: 40px;
+}
+
+
+h1{
+    font-size: 23px;
+    font-weight: 500;
+    color: white  ;
+    margin-bottom: 15px;
+}
+
+h2{
+    font-size: 18px;
+    font-weight: 200;
+    color: white  ;
+    margin-top: 0;
+}
+
+.sociaux{
+    display: flex;
+    justify-content: space-around;
+}
+
+footer{
+    padding-top: 20px;
+    padding-bottom: 10px;
+    margin-top: 24px;
+    border-top: white solid 2px;
+    background-color: #7e9cff;
+
+}
+
+.btn-valid, .btn-valid:hover, .btn-valid:focus{
+    background-color: #7e9cff;
+    color: white;
+    margin-top: 10px;
+}
+
+input:focus+label, textarea:focus+label{
+    color: #7e9cff !important;
+
+}
+
+input:focus, textarea:focus{
+    border-bottom: 1px solid #7e9cff !important;
+    box-shadow: 0 1px 0 0 #7e9cff !important;
+}
+
+
+[type="radio"]:checked+label:after, [type="radio"].with-gap:checked+label:after {
+    background-color: #7e9cff;
+}
+[type="radio"]:checked+label:after, [type="radio"].with-gap:checked+label:before, [type="radio"].with-gap:checked+label:after {
+    border: 2px solid #7e9cff;
+}
+
+p{
+    margin-top: 15px !important;
+}
+.input-field input{
+    margin-bottom: 0;
+    margin-top: 5px;
+    border-bottom: 1px solid #263238 ;
+}
+
+.form-group li{
+    color: white;
+    font-size: 13px;
+    text-align: center;
+    font-weight: 700;
+    background-color: #ff5252 ;
+    margin-top: 5px;
+
+}
+
+.form-group ul{
+    margin-top: 0;
+}
+
+[type="checkbox"]:checked+label:before {
+    border-bottom-color:  #7e9cff !important;
+    border-right-color:  #7e9cff !important;
+}
+
+@media only screen and (max-width: 710px){
+    .card-image img{
+        height: 400px;
+    }
+
+    #btn-footer a{
+        width: 100%;
+        margin-bottom: 15px;
+    }
+
+    #inscription_account, #cg{
+        display: flex;
+        flex-direction: column;
+    }
+
+
+}
+
+/*DatePicker*/
+.picker__weekday-display{
+    background-color:   #7e9cff;
+}
+
+.picker__date-display{
+    background-color:  #7e9cff;
+}
+
+.picker__day.picker__day--today{
+    color:  #7e9cff;
+}
+
+.picker__footer{
+    background-color:  #7e9cff;
+}
+
+.picker__nav--prev:hover, .picker__nav--next:hover {
+    background-color: white;
+}
+
+.picker__today{
+    color: white;
+}
+
+.picker__close{
+    color: white;
+}
+
+
+.picker__day--selected, .picker__day--selected:hover, .picker--focused .picker__day--selected{
+    background-color: #7e9cff;
+}

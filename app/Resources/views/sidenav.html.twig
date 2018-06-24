@@ -1,0 +1,54 @@
+{% if is_granted('ROLE_ADMIN') %}
+<ul id="slide-out" class="side-nav">
+    <li>
+        <div class="userView">
+            <p>{{ app.user.pseudo }} </p>
+            <p style=" margin-bottom: 0">{{ app.user.account }}</p>
+        </div>
+    </li>
+    <li><a href="{{ path('update_account') }}"> <i class="small material-icons">mode_edit</i>Modifier vos informations </a></li>
+    <li><a href="{{ path('mes_observations') }}"> <i class="small material-icons">visibility</i>Mes observations </a></li>
+    <li><a href="{{ path('validations_attentes') }}"><i class="small material-icons">done</i> Validations en attente</a></li>
+    <li><a href="{{ path('exportation_bdd') }}"> <i class="small material-icons">dns</i>Exportation de la base de donnée</a></li>
+    <li><a href="{{ path('gestion_membres') }}"> <i class="small material-icons">supervisor_account</i>Gestion des membres </a></li>
+    <li><a href="{{ path('observations_validees')}}"><i class="small material-icons">done_all</i> Observation validées </a></li>
+    <li><a href="{{ path('logout') }}"><i class="small material-icons">power_settings_new</i> Se déconnecter </a></li>
+</ul>
+{% elseif is_granted('ROLE_NATURALISTE') %}
+<ul id="slide-out" class="side-nav">
+    <li>
+        <div class="userView">
+            <p>{{ app.user.pseudo }} </p>
+            <p style=" margin-bottom: 0">{{ app.user.account }}</p>
+        </div>
+    </li>
+    <li><a href="{{ path('update_account') }}"> <i class="small material-icons">mode_edit</i>Modifier vos informations </a></li>
+    <li><a href="{{ path('mes_observations') }}"><i class="small material-icons">visibility</i>Mes observations </a></li>
+    <li><a href="{{ path('validations_attentes') }}"> <i class="small material-icons">done</i> Validations en attente</a></li>
+    <li><a href="{{ path('exportation_bdd') }}"><i class="small material-icons">dns</i>Exportation de la base de donnée</a></li>
+    <li><a href="{{ path('logout') }}"><i class="small material-icons">power_settings_new</i> Se déconnecter </a></li>
+</ul>
+{% elseif is_granted('ROLE_PARTICULIER') %}
+<ul id="slide-out" class="side-nav">
+    <li>
+        <div class="userView">
+            <p>{{ app.user.pseudo }} </p>
+            <p style=" margin-bottom: 0">{{ app.user.account }}</p>
+           {% if app.user.justificatif %}<p>(Justificatif en cours de traitement)</p> {% endif %}
+        </div>
+    </li>
+    <li><a href="{{ path('update_account') }}"> <i class="small material-icons">mode_edit</i>Modifier vos informations </a></li>
+    <li><a href="{{ path('mes_observations') }}"><i class="small material-icons">visibility</i>Mes observations </a></li>
+    <li><a href="{{ path('logout') }}"><i class="small material-icons">power_settings_new</i> Se déconnecter </a></li>
+</ul>
+{% elseif is_granted('ROLE_EN_ATTENTE_DE_VALIDATION') %}
+<ul id="slide-out" class="side-nav">
+    <li>
+        <div class="userView">
+            <p>{{ app.user.pseudo }} </p>
+            <p style=" margin-bottom: 0">Compte non validé</p>
+        </div>
+    </li>
+    <li><a href="{{ path('logout') }}"><i class="small material-icons">power_settings_new</i> Se déconnecter </a></li>
+</ul>
+{% endif %}

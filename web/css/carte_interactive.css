@@ -1,0 +1,18 @@
+#detail_obs {
+	line-height: 2.5;
+	font-size: large;
+}
+
+.tooltipped{
+    margin-bottom: 20px;
+    margin-top: 31px;
+}
+
+.block-form {
+  padding: 30px;
+  min-height: 528px;
+}
+
+.materialboxed {
+  display: initial;
+}

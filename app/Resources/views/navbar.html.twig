@@ -1,0 +1,38 @@
+{% if is_granted('IS_AUTHENTICATED_FULLY') or  is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+    <a href="#" class="menu_perso button-side right hide-on-large-only" data-activates="slide-out"><i class="material-icons">person&nbsp;</i></a>
+{% else %}
+    <a href="{{ path('connexion') }}" class="button-side right hide-on-large-only"><i class="material-icons">input&nbsp;</i></a>
+{% endif %}
+
+
+<ul class="right hide-on-med-and-down">
+    <li><a href="{{ path('carte_interactive') }}" class="carte_interactive"><i class="fa fa-map "></i> Carte interactive</a></li>
+    <li><a href="{{ path('ajouter_observation') }}" class="ajouter_observation"><i class="fa fa-plus-circle "></i> Ajout d'une observation</a></li>
+    <li><a href="{{ path('notre_association') }}" class="notre_association"><i class="fa fa-users"></i> Notre association</a></li>
+    <li><a href="{{ path('contact') }}" class="contact"><i class="fa fa-envelope"></i> Contact</a></li>
+    <!--  visiteur only -->
+    {% if  is_granted('IS_AUTHENTICATED_FULLY') or  is_granted('IS_AUTHENTICATED_REMEMBERED')%}
+        <li> <button class="menu_perso acces_menu row waves-effect waves-light" data-activates="slide-out" href="#" >
+                {{ app.user.pseudo }} <i class="fa fa-user" style="height: 2px "></i> <br>
+            </button>
+        </li>
+    {% else %}
+        <li><a href="{{ path('connexion') }}" class="connexion"><i class="fa fa-sign-in"></i> Connectez-vous</a></li>
+        <li> <a href="{{ path('inscription') }}" class="waves-effect waves-light light-blue accent-4 btn">Inscription</a></li>
+    {% endif %}
+</ul>
+<ul class="side-nav" id="mobile-demo">
+    <li><a href="{{ path('carte_interactive') }}" class="carte_interactive"><i class="fa fa-map"></i> Carte interactive</a></li>
+    <!-- connected only -->
+    <li><a href="{{ path('ajouter_observation') }}" class="ajouter_observation"><i class="fa fa-plus-circle"></i> Ajout d'une observation</a></li>
+    <!-- end connected -->
+    <li><a href="{{ path('notre_association') }}" class="notre_association"><i class="fa fa-users"></i> Notre association</a></li>
+    <li><a href="{{ path('contact') }}" class="contact"><i class="fa fa-envelope"></i> Contact</a></li>
+    <!--  visiteur only -->
+    {% if  is_granted('IS_AUTHENTICATED_FULLY') or  is_granted('IS_AUTHENTICATED_REMEMBERED')%}
+
+    {% else %}
+        <li><a href="{{ path('connexion') }}" class="connexion"><i class="fa fa-sign-in"></i> Connectez-vous</a></li>
+        <li> <a href="{{ path('inscription') }}" class="waves-effect waves-light light-blue accent-4 btn">Inscription</a></li>
+    {% endif %}
+</ul>

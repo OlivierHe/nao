@@ -1,0 +1,41 @@
+parameters:
+
+services:
+    #service_name:
+    #    class: AppBundle\Directory\ClassName
+    #    arguments: ['@another_service_name', 'plain_value', '%parameter_name%']
+   app.generate_response :
+      class: AppBundle\Services\GenerateResponse
+      arguments: ["@doctrine.orm.entity_manager","@serializer"]
+   app.add_observation:
+      class: AppBundle\Services\AddObservation
+      arguments: ["@doctrine.orm.entity_manager", "@session", "@form.factory","@security.token_storage","@security.authorization_checker"]
+   app.taxref_repository:
+      class: AppBundle\Repository\TaxrefRepository
+      factory: ['@doctrine.orm.entity_manager', getRepository]
+      arguments: ['AppBundle\Entity\Taxref']
+   app.taxref_type:
+      class: AppBundle\Form\Type\ObservationType
+      arguments: ["@app.taxref_repository"]
+      tags:
+          - { name: form.type }
+   app.users_manager:
+      class: AppBundle\Services\UsersManager
+      arguments: ["@doctrine.orm.entity_manager","@form.factory","@session","@app.mailer","@app.securite","@app.photo_manager"]
+   app.securite:
+      class: AppBundle\Services\Securite
+      arguments: ["@doctrine.orm.entity_manager", "@session", "@form.factory", "@security.password_encoder", "@app.mailer", "@security.authentication_utils", "@router"]
+   app.alter_delete :
+      class: AppBundle\Services\AlterDelete
+      arguments: ["@doctrine.orm.entity_manager"]
+   app.mailer:
+      class: AppBundle\Services\Mailer
+      arguments: ["@mailer","@twig","@session","@form.factory"]
+   app.photo_manager:
+      class: AppBundle\Services\PhotoManager
+      arguments: ["%photo_directory%"]
+   app.photo_listener:
+      class: AppBundle\EventListener\PhotoEventListener
+      arguments: ["@app.photo_manager"]
+      tags:
+          - { name : doctrine.orm.entity_listener }

@@ -1,0 +1,95 @@
+{% extends "::layout.html.twig" %}
+
+ {% block stylesheets %}
+	 <style xmlns="http://www.w3.org/1999/html">
+	 ul{
+	    list-style-type: none;
+		margin: 0;
+	}
+
+
+    #contact > div > ul > li {
+    	color: red;
+    }
+	span{
+		margin-left: 10px;
+		font-weight: 300;
+	}
+
+    .block-form a{
+		padding: 0 !important;
+	}
+
+ </style>
+ {% endblock %}
+
+   {% block content %}
+	{% for msg in app.session.flashBag.get('success') %}
+		<div class="card-panel teal green accent-2" style="text-align: center">
+		  {{ msg }}
+		</div>
+	{% endfor %}
+    <div class="container box-master" style="margin-bottom: 50px;">
+			<div class="row" >
+				<div class="col l6 offset-l1 s12 " style="height: 100%" >
+					<div class="card block-form  " style="height: 100%">
+						<h1 style="display: inline-block"> Nous contacter </h1>
+						{{ form_start(form) }}
+						<div style="display: flex; flex-direction: column; justify-content: space-around; height: 100%">
+							<div class="form-group">
+								<div class="input-field">
+									{{ form_widget(form.nomcomplet) }}
+									{{ form_label(form.nomcomplet) }}
+								</div>
+								{{ form_errors(form.nomcomplet) }}
+							</div>
+
+							<div class="form-group">
+								<div class="input-field"  >
+									{{ form_widget(form.email) }}
+									{{ form_label(form.email) }}
+								</div>
+								{{ form_errors(form.email) }}
+							</div>
+
+							<div class="form-group">
+								<div class="input-field" >
+									{{ form_widget(form.objet) }}
+									{{ form_label(form.objet) }}
+								</div>
+								{{ form_errors(form.objet) }}
+							</div>
+							<div class="form-group">
+								<div class="input-field" >
+									{{ form_widget(form.message,  {'attr': {'class': 'materialize-textarea' } }) }}
+									{{ form_label(form.message) }}
+								</div>
+								{{ form_errors(form.message) }}
+							</div>
+							<button class="waves-effect waves-light  light-blue accent-4  btn " role="button"  type="submit" style="margin-top: 5px" id="valid-btn"> Valider </button>
+						</div>
+						{{ form_end(form) }}
+					</div>
+				</div>
+				<div class="col l4 s12 " style="height: 100%">
+					<div class="card block-form row ">
+						<h1 class="col s12 "> Nos coordonnées </h1>
+						<h2 class="col s12">Adresse </h2>
+						<ul class="adresse col s12" style=" text-align: center;">
+							<li>2 rue du Pivert</li>
+							<li>94880 Noiseau</li>
+							<li>France </li>
+						</ul>
+
+						<h2 class="col s12"  >Téléphone </h2>
+						<p class="col s12 " style="text-align: center; " >01 02 03 04 05</p>
+						<h2 class="col s12 ">Fax </h2>
+						<p class="col s12" style="text-align: center; ">01 22 03 04 05 </p>
+
+					</div>
+				</div>
+			</div>
+	</div>
+   {% endblock %}
+   
+   

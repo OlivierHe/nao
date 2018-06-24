@@ -1,0 +1,105 @@
+{% extends "::layout.html.twig" %}
+
+
+{% block content %}
+    {% for message in app.session.flashbag.get('info') %}
+        <p class="flash-info"> {{ message }}</p>
+    {% endfor %}
+    {% for message in app.session.flashbag.get('error') %}
+        <div class="card-panel teal green accent-2" id="error-for-toast" style="text-align: center">
+            {{ message }}
+        </div>
+    {% endfor %}
+    {% for message in app.session.flashbag.get('success') %}
+        <div class="card-panel teal green accent-2" id="success-for-toast" style="text-align: center">
+            {{ message }}
+        </div>
+    {% endfor %}
+
+    <div class="container box-master" style="margin-bottom: 150px">
+        <h1 class="text-center">Gestion des membres</h1>
+        <h2 class="text-center">Résumé du site</h2>
+        <div class="card input-field">
+        </div>
+        <div class="row summary card " style="padding-top:20px;padding-bottom: 20px; ">
+            <div class="col s12 m5">
+                <p>Comptes particulier : <span>  {{ datas[1] }}</span></p>
+                <p>Comptes naturaliste : <span>  {{ datas[0] }}</span> </p>
+                <p>Naturalistes en attente de validation : <span>  {{ datas[2] }}</span></p>
+            </div>
+
+            <div class="col s12 m5">
+                <p>Nombre total d'observation : <span>  {{ datas[3] }}</span> </p>
+                <p>Observation validées : <span>  {{ datas[5] }}</span> </p>
+                <p>Observations en attente de validation : <span>  {{ datas[4] }}</span> </p>
+            </div>
+        </div>
+
+        <h2 class="text-center">Liste des membres</h2>
+
+        <div class="row btn-filter">
+            <a class="waves-effect waves-light btn blue-grey darken-4 btn col s12 m3" id="btn-validated">Compte validé</a>
+            <a class="waves-effect waves-light btn blue-grey darken-4 col s12 m3" id="btn-waiting">Justificatif à traiter</a>
+            <a class="waves-effect waves-light btn blue-grey darken-4 col s12 m3" id="btn-nomail">Email non validé</a>
+            <a class="waves-effect waves-light btn blue-grey darken-4 col s12 m3" id="btn-member">Membre de l'association</a>
+        </div>
+
+        <div class="row manager-member">
+            <table id="tabledata" class=" display card table-datas" cellspacing="0" width="100%"  data-path="{{ path('users_query') }}" >
+                <thead>
+                <tr>
+                    <th  data-priority="1">Inscription</th>
+                    <th >Pseudo</th>
+                    <th>Compte</th>
+                    <th data-priority="3">Email</th>
+                    <th data-priority="2">Détails</th>
+                    <th style="display: none">Membre</th>
+                    <th style="display: none">Email Valid</th>
+                </tr>
+                </thead>
+                <div class="progress amber accent-4 " id="loader" style="display: none;">
+                    <div class="indeterminate  amber lighten-5"></div>
+                </div>
+                <tbody>
+                    <tr>
+
+
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div id="modal-member" class="modal " data-path="{{ path('gestion_membres_form') }}">
+    </div>
+
+    <div id="modal-delete" class="modal">
+        <div class="modal-content">
+            <p style="font-weight: 500">Etes vous sûr de vouloir supprimer ce membre ?</p>
+        </div>
+        <div class="modal-footer">
+            <a href="#!" id="accept-del" class="modal-action modal-close waves-effect green waves-light btn-flat" style="text-decoration: none">Oui </a>
+            <a href="#!" id="refuse-del" class="modal-action modal-close waves-effect red waves-light btn-flat" style="text-decoration: none">Non</a>
+        </div>
+    </div>
+
+    <div id="modal-ask" class="modal">
+        <div class="modal-content">
+            <p style="font-weight: 500">Etes vous sûr de vouloir demander un nouveau justificatif ?</p>
+        </div>
+        <div class="modal-footer">
+            <a href="#!" id="accept-ajc" class="modal-action modal-close waves-effect green waves-light btn-flat" style="text-decoration: none">Oui </a>
+            <a href="#!" id="refuse-ajc" class="modal-action modal-close waves-effect red waves-light btn-flat" style="text-decoration: none">Non</a>
+        </div>
+    </div>
+
+{% endblock %}
+
+ {% block scriptfoot %}
+     <script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+     <script type="text/javascript" src="{{ asset("js/members_manager.js") }}"> </script>
+     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.15/datatables.min.css"/>
+     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.1.1/css/responsive.dataTables.min.css"/>
+     <script type="text/javascript" src="https://cdn.datatables.net/responsive/2.1.1/js/dataTables.responsive.min.js"></script>
+ {% endblock %}
+ 

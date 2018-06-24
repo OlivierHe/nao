@@ -1,0 +1,83 @@
+{% extends "::layout.html.twig" %}
+
+{% block content %}
+    {% for msg in app.session.flashBag.get('success') %}
+        <div class="card-panel teal green accent-2" style="text-align: center">
+          {{ msg }}
+        </div>
+    {% endfor %}
+    {% for msg in app.session.flashBag.get('info') %}
+        <div class="card-panel teal green accent-2" style="text-align: center">
+            {{ msg }}
+        </div>
+    {% endfor %}
+    <div class="container box-master">
+        <div class="row">
+            <div class="col l4 s12  block">
+                <div class="card" style="height: 100%">
+                    <div class="card-image">
+                        <img src="{{ asset("images/bird3.jpg") }}">
+                    </div>
+                    <div class="card-action text-center">
+                        <a href="{{ path("ajouter_observation") }}"> Partagez vos observations </a>
+                    </div>
+                    <div class="card-content">
+                        <p>Utiliser notre  carte interactive et son systême de géolocalisation pour partager <strong>vos observations</strong> avec la communauté. </p>
+                        <br>
+                        <p>Pas de panique si vous ne retrouvez pas le nom d'une espèce, <strong>proposez votre observation avec une photo</strong>, et un des nombreux naturalistes de la communauté l'identifiera. </p>
+                        <br>
+                        <p>Votre observation sera <strong>disponible après validation</strong> et vous pourrez la retrouvez sur la carte interactive. </p>
+                        <br>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="col l4 s12 block">
+                <div class="card" style="height: 100%">
+                    <div class="card-image">
+                        <img src="{{ asset("images/bird2.jpg") }}">
+                    </div>
+                    <div class="card-action text-center">
+                        <a href="{{ path("carte_interactive") }}"> Recherchez une espèce </a>
+                    </div>
+                    <div class="card-content">
+                        <p> Vous pouvez retrouver toutes les observations de la communauté datées et accompagnées d'une photo sur <strong>la carte interactive</strong></p>
+                        <br>
+                        <p> Notre<strong> système  d'auto-complétion</strong> vous aidera dans la recherche d'une espêce. </p>
+                        <br>
+                        <p> En cas de doute sur la correspondance de l'espèce avec celle de l'image, ne vous inquiétez pas, <strong>un naturaliste pourra corriger votre observation.</strong> </p>
+                        <br>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="col l4 s12 block">
+                <div class="card" style="height:100%;">
+                    <div class="card-image">
+                        <img src="{{ asset("images/bird1.jpg") }}">
+
+                    </div>
+                    <div class="card-action text-center">
+                        <a href="{{ path("notre_association") }}"> Adhérez à notre association </a>
+                    </div>
+                    <div class="card-content">
+                        <p>  Notre association regroupe des individus de tout horizon et de tout âge partageant <strong>une même passion. </strong>  </p>
+                        <br>
+                        <p> Vous pouvez adhérer à l'association grâce à un <strong>formulaire télechargeable en ligne</strong>, sur la page de présentation de l'association.</p>
+                        <br>
+                        <p> En adhérent à l'association vous pouvez profitez d'<strong>offres et de privilèges exclusifs.</strong> Vous pouvez retrouvez tous les détails sur la page de présentation de l'association.</p>
+                        <br>
+
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

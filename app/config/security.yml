@@ -1,0 +1,48 @@
+# To get started with security, check out the documentation:
+# http://symfony.com/doc/current/security.html
+security:
+    encoders:
+        AppBundle\Entity\User:
+            algorithm: bcrypt
+            cost: 12
+    providers:
+        main:
+            entity:
+                class:  AppBundle\Entity\User
+                property: username
+
+
+    firewalls:
+        # disables authentication for assets and the profiler, adapt it according to your needs
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+
+        default:
+            anonymous: true
+            form_login:
+                login_path: connexion
+                check_path: login_check
+                default_target_path: carte_interactive
+            remember_me:
+                secret: '%secret%'
+                lifetime: 2419200
+                path: /
+                remember_me_parameter: _remember_me
+
+
+            # ...Log out
+            logout:
+                path:   /logout
+                target: /connexion
+            provider: main
+
+    role_hierarchy:
+        ROLE_ADMIN: [ROLE_NATURALISTE, ROLE_PARTICULIER]
+        ROLE_NATURALISTE: [ROLE_PARTICULIER]
+
+
+
+    access_control:
+            # require ROLE_ADMIN for /connexion*
+            - { path: ^/admin, roles: [ROLE_PARTICULIER] }

@@ -1,0 +1,11 @@
+<p> Bonjour, </p>
+
+<p> Votre addresse mail a bien été modifiée. Veuillez confirmer celle-ci en cliquant sur le lien ci-dessous </p>
+
+<p> Rappel des identifiants :</p>
+
+<p> ------------------------------------------- </p>
+<p> User : {{ username }}</p>
+
+
+<a href="{{ url('valid_mail', { 'id' : id, 'code_validation' : code_validation} ) }}">Valider votre compte</a>

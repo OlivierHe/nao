@@ -1,0 +1,20 @@
+{% extends "layout.html.twig" %}
+
+{% block title %} Erreur 403! {% endblock %}
+{% block content %}
+
+    <div class="container box-error">
+        <div class="row">
+            <div class="col s12 col m4 offset-m2 ">
+                <img src="{{ asset('images/error403.PNG') }}" class="error404">
+            </div>
+            <div class="col s12 col m6">
+                <h1>Accès interdit, Erreur : {{ status_code }}</h1>
+                <br><br>
+                <a href="{{ path('accueil') }}">
+                    <button class="waves-effect waves-light light-blue accent-4 btn col s12 col m12 col l6 offset-l3"> ACCUEIL</button>
+                </a>
+            </div>
+        </div>
+    </div>
+{% endblock %}
